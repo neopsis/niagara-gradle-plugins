@@ -10,10 +10,10 @@ import org.gradle.api.Project;
  */
 public class NeopsisNiagaraProjectExtension {
 
-    public String  description;
-    private String moduleVersion;
-    private String vendor;
-    public Boolean followNiagaraNumbering;
+    public String   description;
+    private String  moduleVersion;
+    private String  vendor;
+    private Boolean followNiagaraNumbering;
 
     private final String niagaraMajorVersion;
     private final String niagaraMinorVersion;
@@ -55,6 +55,9 @@ public class NeopsisNiagaraProjectExtension {
         niagaraVersion = niagaraMajorVersion + "." + niagaraMinorVersion;
         repositoryModuleDir = niagaraRepositoryHome + "/modules-" + niagaraVersion;
 
+        ve.defaultVendor(vendor);
+        // ve.defaultModuleVersion(getModuleFullVersion());
+
     }
 
     public String getModuleVersion() {
@@ -75,15 +78,28 @@ public class NeopsisNiagaraProjectExtension {
         vendorExtension.defaultVendor(vendor);
     }
 
+    public Boolean getFollowNiagaraNumbering() {
+        return followNiagaraNumbering;
+    }
+
+    public void setFollowNiagaraNumbering(Boolean fnn) {
+        this.followNiagaraNumbering = fnn;
+        if (moduleVersion != null) {
+            setModuleVersion(this.moduleVersion);
+        }
+    }
+
     /**
      * Module full version depends on the property followNiagaraNumbering, evaluated after the configuration run
      *
      * @return module full version number
      */
     public String getModuleFullVersion() {
+
         if (followNiagaraNumbering) {
             return niagaraMajorVersion + "." + niagaraMinorVersion + "." + moduleVersion;
         }
+
         return moduleVersion;
     }
 

@@ -1,1 +1,1 @@
-This repository contains several plug-ins that make it easier to configure Gradel for Niagara module development.
+This repository contains several plug-ins that make it easier to configure Gradle for Niagara module development.
