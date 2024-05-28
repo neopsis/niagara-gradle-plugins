@@ -71,8 +71,8 @@ public class NeopsisBundleTask extends Zip {
             readmeFile = new File(neopsisModuleDir + "/" + README_FILE_NAME);
             FileWriter writer = new FileWriter(readmeFile); //overwrites file
 
-            writer.write("Installation bundle for " + getProject().getName() + " version " + moduleFullVersion);
-            writer.write("\nDescription: " + ext.description);
+            writer.write("Installation bundle for module " + ext.getModuleName() + " version " + moduleFullVersion);
+            writer.write("\nDescription: " + ext.getDescription());
             writer.write("\nVendor     : " + ext.getVendor());
 
             // copy new artefact from niagara modules to the repository

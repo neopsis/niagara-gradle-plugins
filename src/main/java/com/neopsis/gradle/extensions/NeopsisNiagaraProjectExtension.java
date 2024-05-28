@@ -10,9 +10,10 @@ import org.gradle.api.Project;
  */
 public class NeopsisNiagaraProjectExtension {
 
-    public String   description;
-    private String  moduleVersion;
-    private String  vendor;
+    private String description;
+    private String moduleVersion;
+    private String moduleName;
+    private String vendor;
     private Boolean followNiagaraNumbering;
 
     private final String niagaraMajorVersion;
@@ -37,15 +38,23 @@ public class NeopsisNiagaraProjectExtension {
         String[] versionParts;
 
         vendorExtension = ve;
-        modules         = prj.getObjects().newInstance(Modules.class);
+        modules = prj.getObjects().newInstance(Modules.class);
 
         // defaults
         vendor = "Neopsis";
         followNiagaraNumbering = true;
 
-        // get gradle.properties and parse dependant values
-        niagaraHome = prj.getProviders().gradleProperty("niagara_home").get();
-        niagaraUserHome = prj.getProviders().gradleProperty("niagara_user_home").get();
+        // get properties and parse dependant values
+        String nh = prj.getProviders().gradleProperty("niagara_home").getOrNull();
+        String nuh = prj.getProviders().gradleProperty("niagara_user_home").getOrNull();
+
+        if ((nh == null || nuh == null)) {
+            nh = System.getProperty("niagara_home");
+            nuh = System.getProperty("niagara_user_home");
+        }
+
+        niagaraHome = nh;
+        niagaraUserHome = nuh;
         niagaraRepositoryHome = prj.getProviders().gradleProperty("niagaraRepositoryHome").get();
         niagaraModuleDir = niagaraHome + "/modules";
         niagaraFullVersion = niagaraHome.split("-")[1];
@@ -56,8 +65,6 @@ public class NeopsisNiagaraProjectExtension {
         repositoryModuleDir = niagaraRepositoryHome + "/modules-" + niagaraVersion;
 
         ve.defaultVendor(vendor);
-        // ve.defaultModuleVersion(getModuleFullVersion());
-
     }
 
     public String getModuleVersion() {
@@ -67,6 +74,22 @@ public class NeopsisNiagaraProjectExtension {
     public void setModuleVersion(String moduleVersion) {
         this.moduleVersion = moduleVersion;
         vendorExtension.defaultModuleVersion(getModuleFullVersion());
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getVendor() {

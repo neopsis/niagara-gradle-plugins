@@ -7,9 +7,9 @@ public class NeopsisNiagaraModule implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-
         applyPlugins(project);
     }
+
 
     /**
      * Apply all module plugins

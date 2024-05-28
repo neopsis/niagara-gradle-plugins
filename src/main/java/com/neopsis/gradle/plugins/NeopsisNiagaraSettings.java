@@ -1,5 +1,7 @@
 package com.neopsis.gradle.plugins;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.tridium.gradle.plugins.settings.LocalSettingsExtension;
 import com.tridium.gradle.plugins.settings.MultiProjectExtension;
 import org.gradle.api.Plugin;
@@ -41,11 +43,28 @@ public class NeopsisNiagaraSettings implements Plugin<Settings> {
     @Override
     public void apply(Settings settings) {
 
+        String buildRelease = settings.getProviders().gradleProperty("build_release").getOrNull();
+        String niagaraHome = settings.getProviders().gradleProperty("niagara_home").getOrNull();
+        String niagaraUserHome = settings.getProviders().gradleProperty("niagara_user_home").getOrNull();
+        String releases = settings.getProviders().gradleProperty("niagara_releases").getOrNull();
+
+        if ((niagaraHome == null || niagaraUserHome == null) && buildRelease != null && releases != null) {
+            JsonObject jsonReleases = JsonParser.parseString(releases).getAsJsonObject();
+            String niagaraRelease = jsonReleases.get(buildRelease).getAsString();
+            String[] niagara_version_parts = niagaraRelease.split("\\.");
+            String niagara_version = niagara_version_parts[0] + "." + niagara_version_parts[1];
+            String niagara_home = "C:/Niagara/Niagara-" + niagaraRelease;
+            String niagara_user_home = System.getProperty("user.home") + "/Niagara" + niagara_version + "/tridium";
+
+            System.setProperty("niagara_home", niagara_home);
+            System.setProperty("niagara_user_home", niagara_user_home);
+        }
+
         String settingsPluginVersion = System.getProperty("settingsPluginVersion", "7.6.2");
-        String gradlePluginVersion   = System.getProperty("gradlePluginVersion", "7.6.17");
+        String gradlePluginVersion = System.getProperty("gradlePluginVersion", "7.6.17");
 
         PluginManagementSpec pms = settings.getPluginManagement();
-        RepositoryHandler    rh  = getArtifactRepositories(settings, pms);
+        RepositoryHandler rh = getArtifactRepositories(settings, pms);
         rh.gradlePluginPortal();
         rh.mavenCentral();
         pms.getPlugins().id("neopsis-module-plugin").version("1.0.0");
@@ -72,7 +91,7 @@ public class NeopsisNiagaraSettings implements Plugin<Settings> {
     /**
      * Return all artifact repositories used in Neopsis plugins. There is a convention - local repositories
      * are located under %NIAGARA_TOOLS_HOME%/gradlePlugins
-     *
+     * <p>
      * Additional repositories can be added in the Gradle settings script
      *
      * @param settings the settings object

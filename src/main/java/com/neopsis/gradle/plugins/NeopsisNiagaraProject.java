@@ -19,8 +19,8 @@ public class NeopsisNiagaraProject implements Plugin<Project> {
 
         VendorProviderExtension vpe = project.getExtensions().create("tridiumVendorProvider", VendorProviderExtension.class);
         VendorExtension ve = project.getExtensions().create("tridiumVendor", VendorExtension.class, project, vpe);
-        NeopsisNiagaraProjectExtension extension = project.getExtensions().create("neopsisParts", NeopsisNiagaraProjectExtension.class, project, ve);
-        TaskProvider<NeopsisBundleTask> bundleTask = project.getTasks().register("bundleModule", NeopsisBundleTask.class, extension);
+        NeopsisNiagaraProjectExtension extension = project.getExtensions().create("bundle", NeopsisNiagaraProjectExtension.class, project, ve);
+        TaskProvider<NeopsisBundleTask> bundleTask = project.getTasks().register("bundleRelease", NeopsisBundleTask.class, extension);
         bundleTask.get().setGroup("neopsis");
 
         applyPlugins(project);
