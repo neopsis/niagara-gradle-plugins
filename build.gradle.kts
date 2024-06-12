@@ -25,7 +25,7 @@ gradlePlugin {
             implementationClass = "com.neopsis.gradle.plugins.NeopsisNiagaraSettings"
             displayName         = "Neopsis Niagara settings plugin"
             description         = "Neopsis Gradle plugin for Niagara settings"
-            tags.set(listOf("neopsis", "niagara", "plugin"))
+            tags.set(listOf("neopsis", "niagara"))
 
         }
         create("neopsisNiagaraModule") {
@@ -33,14 +33,14 @@ gradlePlugin {
             implementationClass = "com.neopsis.gradle.plugins.NeopsisNiagaraModule"
             displayName         = "Neopsis Niagara module plugin"
             description         = "Neopsis Gradle plugin for Niagara modules build"
-            tags.set(listOf("neopsis", "niagara", "plugin"))
+            tags.set(listOf("neopsis", "niagara"))
         }
         create("neopsisNiagaraProject") {
             id                  = "com.neopsis.niagara-project-plugin"
             implementationClass = "com.neopsis.gradle.plugins.NeopsisNiagaraProject"
             displayName         = "Neopsis Niagara project plugin"
             description         = "Neopsis Gradle plugin for Niagara project build"
-            tags.set(listOf("neopsis", "niagara", "plugin"))
+            tags.set(listOf("neopsis", "niagara"))
         }
     }
 }
