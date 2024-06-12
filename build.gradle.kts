@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.bouncycastle.asn1.x500.style.RFC4519Style.o
+
 /*
  * Neopsis Gradle plugins for Niagara projects
  */
@@ -5,25 +7,40 @@
 plugins {
     id("java")
     id("java-gradle-plugin")
-    id("maven-publish")
+    // id("maven-publish")
+    id("com.gradle.plugin-publish") version "1.2.1"
+
 }
 
 group   = "com.neopsis"
 version = "1.0.0"
 
 gradlePlugin {
+    website.set("https://github.com/neopsis")
+    vcsUrl.set("https://github.com/neopsis/niagara-gradle-plugins")
+
     plugins {
         create("neopsisNiagaraSettings") {
-            id                  = "neopsis-settings-plugin"
+            id                  = "com.neopsis.niagara-settings-plugin"
             implementationClass = "com.neopsis.gradle.plugins.NeopsisNiagaraSettings"
+            displayName         = "Neopsis Niagara settings plugin"
+            description         = "Neopsis Gradle plugin for Niagara settings"
+            tags.set(listOf("neopsis", "niagara", "plugin"))
+
         }
         create("neopsisNiagaraModule") {
-            id                  = "neopsis-module-plugin"
+            id                  = "com.neopsis.niagara-module-plugin"
             implementationClass = "com.neopsis.gradle.plugins.NeopsisNiagaraModule"
+            displayName         = "Neopsis Niagara module plugin"
+            description         = "Neopsis Gradle plugin for Niagara modules build"
+            tags.set(listOf("neopsis", "niagara", "plugin"))
         }
         create("neopsisNiagaraProject") {
-            id                  = "neopsis-project-plugin"
+            id                  = "com.neopsis.niagara-project-plugin"
             implementationClass = "com.neopsis.gradle.plugins.NeopsisNiagaraProject"
+            displayName         = "Neopsis Niagara project plugin"
+            description         = "Neopsis Gradle plugin for Niagara project build"
+            tags.set(listOf("neopsis", "niagara", "plugin"))
         }
     }
 }
@@ -53,6 +70,7 @@ dependencies {
 publishing {
     repositories {
         maven {
+            name = "localPluginRepository"
             url = uri(providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
         }
     }

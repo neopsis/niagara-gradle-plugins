@@ -10,10 +10,10 @@ import org.gradle.api.Project;
  */
 public class NeopsisNiagaraProjectExtension {
 
-    private String description;
-    private String moduleVersion;
-    private String moduleName;
-    private String vendor;
+    private String  description;
+    private String  moduleVersion;
+    private String  moduleName;
+    private String  vendor;
     private Boolean followNiagaraNumbering;
 
     private final String niagaraMajorVersion;

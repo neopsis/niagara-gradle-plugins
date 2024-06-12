@@ -95,12 +95,20 @@ public class NeopsisBundleTask extends Zip {
             writer.write("\n" + moduleName + ": " + moduleFullVersion);
 
             for (Module module : moduleList) {
-                String src = module.getName() + "-*-" + module.getVersion() + ".jar";
-                String renameFrom = module.getName() + "-(.+)-" + module.getVersion() + ".jar";
+
+                String modVer = "";
+                if (module.getFollowNiagaraNumbering()) {
+                    modVer = ext.getNiagaraVersion() + ".";
+                }
+                modVer = modVer + module.getVersion() ;
+
+
+                String src = module.getName() + "-*-" + modVer + ".jar";
+                String renameFrom = module.getName() + "-(.+)-" + modVer + ".jar";
                 String renameTo = module.getName() + "-$1.jar";
                 include(src);
                 rename(renameFrom, renameTo);
-                writer.write("\n" + module.getName() + ": " + module.getVersion());
+                writer.write("\n" + module.getName() + ": " + modVer);
             }
 
             writer.close();

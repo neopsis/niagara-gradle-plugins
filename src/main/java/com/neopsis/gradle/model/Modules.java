@@ -11,6 +11,10 @@ public class Modules {
         moduleList.add(new Module(module, version));
     }
 
+    public void module(String module, String version, Boolean num) {
+        moduleList.add(new Module(module, version, num));
+    }
+
     public List<Module> getModuleList() {
         return moduleList;
     }
