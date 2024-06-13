@@ -67,14 +67,14 @@ dependencies {
     implementation("com.tridium.tools:gradle-settings-plugins:7.6.3")
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "localPluginRepository"
-            url = uri(providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
-        }
-    }
-}
+//publishing {
+//    repositories {
+//        maven {
+//            name = "localPluginRepository"
+//            url = uri(providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
+//        }
+//    }
+//}
 
 tasks.test {
     useJUnitPlatform()

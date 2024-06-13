@@ -1,5 +1,5 @@
 This repository contains several plug-ins that make it easier to configure Gradle for Niagara development. 
-The Neopsis plugin internally configures the Tridium plugins and thus minimizes the configuration. Befor you 
+The Neopsis plugin internally configures the Tridium plugins and thus minimizes the configuration. Before you 
 start using the plugin, you have to define some gradle properties.
 
 ### Prepare `${USER_HOME}/.gradle/gradle.properties`
@@ -87,7 +87,7 @@ rootProject.name = "MyProject"
 The `bundle` section has two functions:
 
 * defines the version of the module. If you use the Neopsis plugin, you do not need to define the Tridium plugin
-  properties `vendorVersion` and `vendorDescription`. This properties are defined internally by Neopsis plugin, based on the
+  properties `vendorVersion` and `vendorDescription`. These properties are defined internally by Neopsis plugin, based on the
   entries in the bundle section.
 * defines the contents of the ZIP file that is created with the task `bundleModule`. The bundle will be stored in
   the repository defined by the property `niagaraRepositoryHome` (see `gradle.properies` above). 
