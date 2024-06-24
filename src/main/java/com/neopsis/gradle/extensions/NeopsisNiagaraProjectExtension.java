@@ -31,7 +31,8 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * In constructor we can parse values from gradle.properties
      *
-     * @param prj
+     * @param prj project
+     * @param ve  vendor
      */
     public NeopsisNiagaraProjectExtension(Project prj, VendorExtension ve) {
 
@@ -160,7 +161,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Niagara module directory, e.g.  ${NIAGARA_HOME}/modules
      *
-     * @return
+     * @return Niagara modules directory in ${NIAGARA_HOME}/modules
      */
     public String getNiagaraModuleDir() {
         return niagaraModuleDir;
@@ -169,7 +170,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Neopsis module directory, e.g. ${REPOSITORY_HOME}/modules-${NIAGARA_VERSION}
      *
-     * @return
+     * @return Repository module directory
      */
     public String getRepositoryModuleDir() {
         return repositoryModuleDir;
@@ -178,7 +179,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Niagara major version number
      *
-     * @return
+     * @return Niagara minor version, ex. 13
      */
     public String getNiagaraMajorVersion() {
         return niagaraMajorVersion;
@@ -187,7 +188,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Niagara minor version number
      *
-     * @return
+     * @return Niagara major version, currently always 4
      */
     public String getNiagaraMinorVersion() {
         return niagaraMinorVersion;
@@ -196,7 +197,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Niagara version number, e.g. ${MAJOR}.${MINOR}
      *
-     * @return
+     * @return Main nNiagara version number like 4.13
      */
     public String getNiagaraVersion() {
         return niagaraVersion;
@@ -205,7 +206,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Niagara full version number, e.g. 4.13.110.7
      *
-     * @return
+     * @return Full Niagara version like 4.13.110.7
      */
     public String getNiagaraFullVersion() {
         return niagaraFullVersion;
@@ -214,7 +215,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Returs list of bundeled modules
      *
-     * @return
+     * @return All modules
      */
     public Modules getModules() {
         return modules;
@@ -223,7 +224,7 @@ public class NeopsisNiagaraProjectExtension {
     /**
      * Sets a list of bundeled modules
      *
-     * @param action
+     * @param action Action to be performed
      */
     public void modules(Action<Modules> action) {
         action.execute(modules);
