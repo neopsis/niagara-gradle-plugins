@@ -9,10 +9,13 @@ versions of Niagara.
 The Neopsis plugin simplifies the default Gradle configuration for module compilation, allows easy switching 
 between Niagara versions and adds simple module management in the local repository.
 
+The plugin is hosted on the great free repository service `https://repsy.io`, see `https://repo.repsy.io/mvn/neopsis/niagara/`.
+
 
 ### Prepare `${USER_HOME}/.gradle/gradle.properties`
 
-Before you start using the plugin, you have to define some Gradle properties in your user gradle.properties file
+Before you start using the plugin, you have to define some Gradle properties in your user gradle.properties file.
+In the time of writing this README the Neopsis plugin version is 1.0.0. 
 
 ```
 # Set the Neopsis and Niagara plugin versions
@@ -60,7 +63,7 @@ managed internally by the Neopsis plugin. It allows us to easily switch the vers
 
 ### Example of `settings.gradle.kts`
 
-The only thing you need to change is the project name.
+The only thing you need to change is the project name. 
 
 ```
 /*
@@ -74,6 +77,7 @@ pluginManagement {
 
     repositories {
         maven(url = providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
+        maven(url = uri("https://repo.repsy.io/mvn/neopsis/niagara"))
         mavenCentral()
         gradlePluginPortal()
     }
@@ -172,6 +176,7 @@ import org.gradle.api.internal.artifacts.dsl.dependencies.DependencyAdderExtensi
 
 repositories {
      maven(url = providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
+     maven(url = uri("https://repo.repsy.io/mvn/neopsis/niagara"))
      mavenCentral()
      gradlePluginPortal()
 }

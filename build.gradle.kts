@@ -1,4 +1,5 @@
 import org.gradle.internal.impldep.org.bouncycastle.asn1.x500.style.RFC4519Style.o
+import org.gradle.internal.impldep.org.bouncycastle.cms.RecipientId.password
 
 /*
  * Neopsis Gradle plugins for Niagara projects
@@ -7,8 +8,8 @@ import org.gradle.internal.impldep.org.bouncycastle.asn1.x500.style.RFC4519Style
 plugins {
     id("java")
     id("java-gradle-plugin")
-    // id("maven-publish")
-    id("com.gradle.plugin-publish") version "1.2.1"
+    id("maven-publish")
+    // id("com.gradle.plugin-publish") version "1.2.1"
 
 }
 
@@ -67,14 +68,24 @@ dependencies {
     implementation("com.tridium.tools:gradle-settings-plugins:7.6.3")
 }
 
-//publishing {
-//    repositories {
-//        maven {
-//            name = "localPluginRepository"
-//            url = uri(providers.gradleProperty("niagaraToolsHome").get() + "/gradlePlugins")
-//        }
-//    }
-//}
+publishing {
+    publications {
+
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+
+        repositories {
+            maven {
+                url = uri("https://repo.repsy.io/mvn/carnecro/niagara")
+                credentials {
+                    username = "carnecro"
+                    password = "Repsy@4711"
+                }
+            }
+        }
+    }
+}
 
 tasks.test {
     useJUnitPlatform()
