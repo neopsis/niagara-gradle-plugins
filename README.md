@@ -6,8 +6,15 @@ The most important change is the support of hardware tokens for signing jar file
 configuration has become somewhat complicated and does not allow, for example, easy switching between different 
 versions of Niagara.
 
-The Neopsis plugin simplifies the default Gradle configuration for module compilation, allows easy switching 
-between Niagara versions and adds simple module management in the local repository.
+Another disadvantage of the standard Tridium Gradle plugins is that Tridium does not distinguish between build and deploy. 
+This leads to some side effects, such as the fact that the `clean` task deletes an existing module from the `%niagara_home%\modules` 
+installation directory. If you haven't made a backup, your old module is irretrievably lost and you can't go back to the old code.
+
+The Neopsis plugin tries to solve some of these problems. Firstly, it simplifies configuration because it activates Tridium plugins 
+internally without having to repeat everything in Gradle files. Neopsis plugin also introduces a local repository where modules 
+created by standard Tridium jar task are copied. The module names in the repository are historized - the module names are extended 
+with a module version suffix. The Neopsis plugin also allows instant switching between the Niagara versions against which 
+the module is compiled.
 
 The plugin is hosted on the great free repository service `https://repsy.io`, see `https://repo.repsy.io/mvn/neopsis/niagara/`.
 
@@ -15,13 +22,13 @@ The plugin is hosted on the great free repository service `https://repsy.io`, se
 ### Prepare `${USER_HOME}/.gradle/gradle.properties`
 
 Before you start using the plugin, you have to define some Gradle properties in your user gradle.properties file.
-In the time of writing this README the Neopsis plugin version is 1.0.0. 
+In the time of writing this README the Neopsis plugin version is 1.0.1. 
 
 ```
 # Set the Neopsis and Niagara plugin versions
 systemProp.gradlePluginVersion=7.6.17
 systemProp.settingsPluginVersion=7.6.3
-systemProp.neopsisPluginVersion=1.0.0
+systemProp.neopsisPluginVersion=1.0.1
 
 # Map with installed Niagara releases. 
 niagara_releases = {      \
@@ -54,8 +61,7 @@ build_release = 13
 * the property `niagara_releases` defines a list of all installed Niagara versions. It assumes the installation path is `C:/Niagara/Niagara-${niagara_release}`
 * the property `signingProfileFile` defines a path to the file with your signing profile.
 * the property `build_release` defines the Niagara version against which the project is being compiled. Use the number
-  from the map `niagara_releases`. I recommend defining this property in the `gradle.properties` file that 
-  is part of the project.
+  from the map `niagara_releases`. I recommend defining this property in the `gradle.properties` file that is part of the project.
 
 The property `build_release` replaces the original Niagara `niagara_home` and `niagara_user_home` properties, that are
 managed internally by the Neopsis plugin. It allows us to easily switch the version of Niagara we are compiling against.
@@ -247,18 +253,16 @@ dependencies {
 }
 ```
 
+### Task `buildRelease`
+
+The `buildRelease` task extends the standard `jar` task by copying generated artifacts from the `%niagara_home%\modules` 
+directory `niagaraRepositoryHome/modules-4.x`. In doing so, the module name in the repository is expanded by its version, 
+so that the old version is not irreversibly overwritten. The task depends on the tasks `clean` and `jar`. The `buildRelease`
+task always compiles against the Niagara version defined in the property `build_release`.
+
 ### Task `bundleRelease`
 
-Neopsis plugin offers a task `bundleRelease`. Use the task to create the final module bundle that is ready
-for distribution. The task 
-
-* cleans the project
-* creates and signs module jar files
-* saves a copy the module jar files in the repository defined in `gradle.properties` as `niagaraRepositoryHome`
-* creates a ZIP file with all module parts and optional additional modules defined in `build.gradle.kts`, section 
-  `bundle modules{}`. The ZIP file will be saved in `niagaraRepositoryHome`. 
-
-As mentioned in the chapter `gradle.properties`, it is always compiled against the version defined 
-in the property `build_release`. The other modules, if they are part of the release bundle, will also be taken from this version.
-
-You can use the file `buildAllReleases.cmd` to create bundles for all Niagara releases in one shot. 
+The `bundleRelease` creates the final module bundle that is ready for distribution. The task depends on the task `buildRelease`
+and it creates a ZIP file with all module parts and optional additional modules defined in `build.gradle.kts`, section `bundle modules{}`. 
+The ZIP files ar saved in `niagaraRepositoryHome` directory. You can use the batch file `buildAllReleases.cmd` to create all bundles 
+for all Niagara releases in one shot. 
