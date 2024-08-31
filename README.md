@@ -6,13 +6,15 @@ The most important change is the support of hardware tokens for signing jar file
 configuration has become somewhat complicated and does not allow, for example, easy switching between different 
 versions of Niagara.
 
-Another disadvantage of the standard Tridium Gradle plugins is that Tridium does not distinguish between build and deploy. 
-This leads to some side effects, such as the fact that the `clean` task deletes an existing module from the `%niagara_home%\modules` 
-installation directory. If you haven't made a backup, your old module is irretrievably lost and you can't go back to the old code.
+Another disadvantage of the standard Tridium Gradle plugins is that Tridium does not distinguish between the process `build` and `deploy`.
+The tasks `clean` and `jar` manipulate artifacts directly in the installation directory! This leads to some side effects, such as the fact 
+that the `clean` task deletes an existing module from the `%niagara_home%\modules` installation directory. If you haven't made a backup, 
+your old module is irretrievably lost and you can't switch back to the old code. This is especially annoying if your Niagara installation 
+is simultaneously used for site engineering.
 
 The Neopsis plugin tries to solve some of these problems. Firstly, it simplifies configuration because it activates Tridium plugins 
-internally without having to repeat everything in Gradle files. Neopsis plugin also introduces a local repository where modules 
-created by standard Tridium jar task are copied. The module names in the repository are historized - the module names are extended 
+internally without having to put a lot of statements in Gradle files. Neopsis plugin also introduces a local repository where modules 
+created by standard Tridium jar task are copied. The module names in the repository are historized so, that the module names are extended 
 with a module version suffix. The Neopsis plugin also allows instant switching between the Niagara versions against which 
 the module is compiled.
 
