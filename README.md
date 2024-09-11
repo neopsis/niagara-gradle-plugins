@@ -58,7 +58,7 @@ build_release = 13
 ```
 
 * the property `niagaraToolsHome` defines the location of Niagara Gradle tools. You can download the tools
-  [here](https://www.niagara-community.com/s/article/Code-Signing-using-Hardwar)
+  [here](https://www.niagara-community.com/s/article/Code-Signing-using-Hardware-Security-Modules)
 * the property `niagaraRepositoryHome` defines the location of all modules except Tridium modules (see the task `Bundle release` below)
 * the property `niagara_releases` defines a list of all installed Niagara versions. It assumes the installation path is `C:/Niagara/Niagara-${niagara_release}`
 * the property `signingProfileFile` defines a path to the file with your signing profile.
